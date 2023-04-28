@@ -2,21 +2,25 @@ package mx.itson.sol
 
 import android.Manifest
 import android.content.pm.PackageManager
-import androidx.appcompat.app.AppCompatActivity
+import android.location.Location
+import android.location.LocationListener
+import android.location.LocationManager
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.Marker
 import mx.itson.sol.entidades.Ubicacion
 import mx.itson.sol.utilerias.RetrofitUtil
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainActivity : AppCompatActivity(), GoogleMap.OnMapLoadedCallback {
+class MainActivity : AppCompatActivity(), GoogleMap.OnMapLoadedCallback, LocationListener {
 
     private var mapa: GoogleMap? = null
 
@@ -66,9 +70,48 @@ class MainActivity : AppCompatActivity(), GoogleMap.OnMapLoadedCallback {
                 )
             }
 
+            val locationManager = getSystemService(LOCATION_SERVICE) as LocationManager
+            val location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+            if (location != null) {
+                onLocationChanged(location)
+            }
+
         } catch (ex: Exception) {
             Log.e("error al cargar el mapa", ex.toString())
         }
+    }
+
+    override fun onLocationChanged(location: Location) {
+        val latitud = location.latitude
+        val longitud = location.longitude
+
+        val latLng = com.google.android.gms.maps.model.LatLng(latitud, longitud)
+        mapa?.clear()
+        mapa?.addMarker(
+            com.google.android.gms.maps.model.MarkerOptions().position(latLng).title("Mi ubicación")
+        )
+        mapa?.moveCamera(com.google.android.gms.maps.CameraUpdateFactory.newLatLng(latLng))
+        mapa?.animateCamera(com.google.android.gms.maps.CameraUpdateFactory.zoomTo(15f))
+
+        mapa?.setOnMarkerDragListener(object : GoogleMap.OnMarkerDragListener {
+            override fun onMarkerDrag(p0: Marker) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onMarkerDragEnd(p0: Marker) {
+                Toast.makeText(
+                    this@MainActivity,
+                    "Latitud: ${p0.position.latitude} Longitud: ${p0.position.longitude}",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+
+            override fun onMarkerDragStart(p0: Marker) {
+                TODO("Not yet implemented")
+            }
+
+
+        })
     }
 }
 
