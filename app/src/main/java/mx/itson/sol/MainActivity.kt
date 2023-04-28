@@ -1,6 +1,6 @@
 package mx.itson.sol
 
-import android.Manifest
+import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationListener
@@ -10,17 +10,21 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.fragment.app.Fragment
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.GoogleMap.OnMarkerDragListener
+import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
+import com.google.android.gms.maps.model.MarkerOptions
 import mx.itson.sol.entidades.Ubicacion
 import mx.itson.sol.utilerias.RetrofitUtil
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainActivity : AppCompatActivity(), GoogleMap.OnMapLoadedCallback, LocationListener {
+class MainActivity : AppCompatActivity(), OnMapReadyCallback, LocationListener {
 
     private var mapa: GoogleMap? = null
 
@@ -34,30 +38,14 @@ class MainActivity : AppCompatActivity(), GoogleMap.OnMapLoadedCallback, Locatio
         mapFragment.getMapAsync(this)
     }
 
-    private fun obtenerUbicacion() {
-        val llamada: Call<Ubicacion> =
-            RetrofitUtil.getApi().getClima("27.9676629", "-110.9188319", true)
-
-        llamada.enqueue(object : Callback<Ubicacion> {
-            override fun onResponse(call: Call<Ubicacion>, response: Response<Ubicacion>) {
-                val ubicacion: Ubicacion? = response.body()
-
-                var a: Int = 1
-            }
-
-            override fun onFailure(call: Call<Ubicacion>, t: Throwable) {
-                var a: Int = 1
-            }
-        })
-    }
-
-    override fun onMapLoaded() {
+    override fun onMapReady(googleMap: GoogleMap) {
         try {
+            mapa = googleMap
             mapa!!.mapType = GoogleMap.MAP_TYPE_HYBRID
 
             val estaPermitido = ActivityCompat.checkSelfPermission(
                 this,
-                Manifest.permission.ACCESS_FINE_LOCATION
+                ACCESS_FINE_LOCATION
             ) == PackageManager.PERMISSION_GRANTED
 
             if (estaPermitido) {
@@ -65,7 +53,7 @@ class MainActivity : AppCompatActivity(), GoogleMap.OnMapLoadedCallback, Locatio
             } else {
                 ActivityCompat.requestPermissions(
                     this,
-                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                    arrayOf(ACCESS_FINE_LOCATION),
                     200
                 )
             }
@@ -81,40 +69,52 @@ class MainActivity : AppCompatActivity(), GoogleMap.OnMapLoadedCallback, Locatio
         }
     }
 
+    private fun obtenerUbicacion() {
+        val llamada: Call<Ubicacion> =
+            RetrofitUtil.getApi().getClima("27.9676629", "-110.9188319", true)
+
+        llamada.enqueue(object : Callback<Ubicacion> {
+            override fun onResponse(call: Call<Ubicacion>, response: Response<Ubicacion>) {
+                val ubicacion: Ubicacion? = response.body()
+            }
+
+            override fun onFailure(call: Call<Ubicacion>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+        })
+    }
+
     override fun onLocationChanged(location: Location) {
         val latitud = location.latitude
         val longitud = location.longitude
 
-        val latLng = com.google.android.gms.maps.model.LatLng(latitud, longitud)
+        val latLng = LatLng(latitud, longitud)
         mapa?.clear()
-        mapa?.addMarker(
-            com.google.android.gms.maps.model.MarkerOptions().position(latLng).title("Mi ubicación")
-        )
-        mapa?.moveCamera(com.google.android.gms.maps.CameraUpdateFactory.newLatLng(latLng))
-        mapa?.animateCamera(com.google.android.gms.maps.CameraUpdateFactory.zoomTo(15f))
 
-        mapa?.setOnMarkerDragListener(object : GoogleMap.OnMarkerDragListener {
-            override fun onMarkerDrag(p0: Marker) {
-                TODO("Not yet implemented")
+        // Guardar referencia al marcador
+        mapa?.addMarker(MarkerOptions().position(latLng).draggable(true).title("Mi ubicación"))
+
+        mapa?.moveCamera(CameraUpdateFactory.newLatLng(latLng))
+        mapa?.animateCamera(CameraUpdateFactory.zoomTo(15f))
+
+        // Agregar listener al marcador
+        mapa?.setOnMarkerDragListener(object : OnMarkerDragListener {
+            override fun onMarkerDragStart(marker: Marker) {
+                // Acción a realizar cuando inicia el arrastre
             }
 
-            override fun onMarkerDragEnd(p0: Marker) {
+            override fun onMarkerDrag(marker: Marker) {
+                // Acción a realizar mientras se está arrastrando
+            }
+
+            override fun onMarkerDragEnd(marker: Marker) {
+                // Acción a realizar cuando se termina el arrastre
                 Toast.makeText(
                     this@MainActivity,
-                    "Latitud: ${p0.position.latitude} Longitud: ${p0.position.longitude}",
+                    "Latitud: ${marker.position.latitude} Longitud: ${marker.position.longitude}",
                     Toast.LENGTH_LONG
                 ).show()
             }
-
-            override fun onMarkerDragStart(p0: Marker) {
-                TODO("Not yet implemented")
-            }
-
-
         })
     }
-}
-
-private fun Fragment.getMapAsync(mainActivity: MainActivity) {
-
 }
