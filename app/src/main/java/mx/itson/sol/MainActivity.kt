@@ -100,11 +100,11 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, LocationListener {
         // Agregar listener al marcador
         mapa?.setOnMarkerDragListener(object : OnMarkerDragListener {
             override fun onMarkerDragStart(marker: Marker) {
-                // Acción a realizar cuando inicia el arrastre
+                TODO("Acción a realizar cuando inicia el arrastre")
             }
 
             override fun onMarkerDrag(marker: Marker) {
-                // Acción a realizar mientras se está arrastrando
+                TODO("Acción a realizar mientras se está arrastrando")
             }
 
             override fun onMarkerDragEnd(marker: Marker) {
