@@ -20,8 +20,7 @@
             android:id="@+id/imgWeatherCode"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:contentDescription="@string/app_name"
-            android:src="@drawable/day_cloudy" />
+            android:contentDescription="@string/app_name" />
     </LinearLayout>
 
     <LinearLayout
@@ -33,29 +32,29 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Latitud: " />
+            android:text="@string/texto_latitud" />
 
         <TextView
-            android:id="@+id/txtLatitud"
+            android:id="@+id/tvLatitud"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="231.12" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=" | " />
+            android:text="" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Longitud: " />
+            android:text="@string/caracter_separador" />
 
         <TextView
-            android:id="@+id/txtLongitud"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="123.12" />
+            android:text="@string/texto_longitud" />
+
+        <TextView
+            android:id="@+id/tvLongitud"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="" />
 
     </LinearLayout>
 
@@ -72,20 +71,34 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/txtTemperatura"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="22°C"
-                android:textAppearance="@style/TextAppearance.AppCompat.Display4"
-                android:textColor="@color/white"
-                android:textSize="75sp" />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvTemperatura"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display4"
+                    android:textColor="@color/white"
+                    android:textSize="75sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/texto_temperatura"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display4"
+                    android:textColor="@color/white"
+                    android:textSize="75sp" />
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/txtClima"
+                android:id="@+id/txtWeatherCode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Cielo despejado"
+                android:text=""
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1"
                 android:textColor="@color/white"
                 android:textSize="20sp" />
@@ -97,23 +110,39 @@
             android:orientation="vertical"
             android:paddingTop="25dp">
 
-            <TextView
-                android:id="@+id/tvElevacion"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="686 M.S.N.M"
-                android:textAppearance="@style/TextAppearance.AppCompat.Display4"
-                android:textColor="@color/white"
-                android:textSize="40sp" />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvElevacion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display4"
+                    android:textColor="@color/white"
+                    android:textSize="40sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/texto_nivel_del_mar"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display4"
+                    android:textColor="@color/white"
+                    android:textSize="40sp" />
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/txtElevacion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Elevación"
+                android:text="@string/texto_elevacion"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1"
                 android:textColor="@color/white"
                 android:textSize="25sp" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -122,20 +151,35 @@
             android:orientation="vertical"
             android:paddingTop="25dp">
 
-            <TextView
-                android:id="@+id/tvViento"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="10 km/h"
-                android:textAppearance="@style/TextAppearance.AppCompat.Display4"
-                android:textColor="@color/white"
-                android:textSize="40sp" />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvVelocidadViento"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display4"
+                    android:textColor="@color/white"
+                    android:textSize="40sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/texto_velocidad"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display4"
+                    android:textColor="@color/white"
+                    android:textSize="40sp" />
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/txtViento"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Velocidad del viento"
+                android:text="@string/texto_velocidad_viento"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1"
                 android:textColor="@color/white"
                 android:textSize="25sp" />
@@ -145,24 +189,37 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:orientation="vertical"
             android:paddingTop="25dp">
 
-            <TextView
-                android:id="@+id/tvDireccion"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="195°"
-                android:textAppearance="@style/TextAppearance.AppCompat.Display4"
-                android:textColor="@color/white"
-                android:textSize="40sp" />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvDireccionViento"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display4"
+                    android:textColor="@color/white"
+                    android:textSize="40sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/caracter_grados"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display4"
+                    android:textColor="@color/white"
+                    android:textSize="40sp" />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/txtDireccion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Direccion del viento"
+                android:text="@string/texto_direccion_viento"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1"
                 android:textColor="@color/white"
                 android:textSize="25sp" />
@@ -181,7 +238,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="#4F504E"
-            android:text="Cerrar"
+            android:text="@string/texto_cerrar"
             android:textColor="@color/white"
             android:textStyle="bold" />
 

@@ -109,6 +109,8 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, LocationListener {
                 val ubicacion: Ubicacion? = response.body()
                 if (ubicacion != null) {
 
+                    val latitud = ubicacion.latitude
+                    val longitud = ubicacion.longitude
                     val elevacion = ubicacion.elevation
                     val temperatura = ubicacion.clima?.temperatura
                     val velocidadViento = ubicacion.clima?.velocidadViento
@@ -117,8 +119,8 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, LocationListener {
                     val esDia = ubicacion.clima?.esDia
 
                     val intent = Intent(this@MainActivity, ViewWeatherActivity::class.java)
-                    intent.putExtra("lat", lat)
-                    intent.putExtra("lon", lon)
+                    intent.putExtra("latitud", latitud)
+                    intent.putExtra("longitud", longitud)
                     intent.putExtra("elevacion", elevacion)
                     intent.putExtra("temperatura", temperatura)
                     intent.putExtra("velocidadViento", velocidadViento)
@@ -127,12 +129,6 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, LocationListener {
                     intent.putExtra("esDia", esDia)
                     startActivity(intent)
 
-                    Log.i("elevacion", elevacion.toString())
-                    Log.i("temperatura", temperatura.toString())
-                    Log.i("velocidadViento", velocidadViento.toString())
-                    Log.i("direccionViento", direccionViento.toString())
-                    Log.i("codigoClima", codigoClima.toString())
-                    Log.i("esDia", esDia.toString())
                 }
             }
 
