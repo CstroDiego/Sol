@@ -20,6 +20,7 @@ class ViewWeatherActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        title = ""
         setContentView(R.layout.activity_view_weather)
 
         latitud = intent.getFloatExtra("latitud", 0.0f)

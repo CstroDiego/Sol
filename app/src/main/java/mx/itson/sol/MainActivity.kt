@@ -28,6 +28,7 @@ import retrofit2.Response
 class MainActivity : AppCompatActivity(), OnMapReadyCallback, LocationListener {
 
     private var mapa: GoogleMap? = null
+    val codigoResultado = 1
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -127,8 +128,8 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, LocationListener {
                     intent.putExtra("direccionViento", direccionViento)
                     intent.putExtra("codigoClima", codigoClima)
                     intent.putExtra("esDia", esDia)
-                    startActivity(intent)
 
+                    startActivityForResult(intent, codigoResultado)
                 }
             }
 
@@ -136,5 +137,13 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, LocationListener {
                 Log.e("Error", t.toString())
             }
         })
+
+
+    }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == codigoResultado && resultCode == RESULT_OK) {
+            // realizar alguna acción en consecuencia
+        }
     }
 }

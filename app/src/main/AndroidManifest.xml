@@ -14,11 +14,13 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Sol"
+        android:theme="@style/AppTheme"
         tools:targetApi="31">
-        <activity
-            android:name=".ViewWeatherActivity"
-            android:exported="false" />
+        <activity android:name=".ViewWeatherActivity"
+            android:theme="@style/Theme.Design.BottomSheetDialog">
+        </activity>
+
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
