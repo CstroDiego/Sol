@@ -8,7 +8,7 @@ import retrofit2.http.Query
 interface OpenMeteo {
 
     @GET("forecast")
-    fun getClima(@Query("latitude") lat:String,
-                 @Query("longitude") lon:String,
+    fun getClima(@Query("latitude") lat:Double,
+                 @Query("longitude") lon:Double,
                  @Query("current_weather") current: Boolean): Call<Ubicacion>
 }

@@ -1,6 +1,7 @@
 package mx.itson.sol
 
 import android.Manifest.permission.ACCESS_FINE_LOCATION
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationListener
@@ -28,11 +29,10 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, LocationListener {
 
     private var mapa: GoogleMap? = null
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        obtenerUbicacion()
 
         val mapFragment = supportFragmentManager.findFragmentById(R.id.mapa) as SupportMapFragment
         mapFragment.getMapAsync(this)
@@ -69,20 +69,6 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, LocationListener {
         }
     }
 
-    private fun obtenerUbicacion() {
-        val llamada: Call<Ubicacion> =
-            RetrofitUtil.getApi().getClima("27.9676629", "-110.9188319", true)
-
-        llamada.enqueue(object : Callback<Ubicacion> {
-            override fun onResponse(call: Call<Ubicacion>, response: Response<Ubicacion>) {
-                val ubicacion: Ubicacion? = response.body()
-            }
-
-            override fun onFailure(call: Call<Ubicacion>, t: Throwable) {
-                TODO("Not yet implemented")
-            }
-        })
-    }
 
     override fun onLocationChanged(location: Location) {
         val latitud = location.latitude
@@ -100,20 +86,58 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, LocationListener {
         // Agregar listener al marcador
         mapa?.setOnMarkerDragListener(object : OnMarkerDragListener {
             override fun onMarkerDragStart(marker: Marker) {
-                TODO("Acción a realizar cuando inicia el arrastre")
+                val a = 1 + 1
             }
 
             override fun onMarkerDrag(marker: Marker) {
-                TODO("Acción a realizar mientras se está arrastrando")
+                val a = 1 + 1
             }
 
             override fun onMarkerDragEnd(marker: Marker) {
-                // Acción a realizar cuando se termina el arrastre
-                Toast.makeText(
-                    this@MainActivity,
-                    "Latitud: ${marker.position.latitude} Longitud: ${marker.position.longitude}",
-                    Toast.LENGTH_LONG
-                ).show()
+                obtenerUbicacion(marker.position.latitude, marker.position.longitude)
+
+            }
+        })
+    }
+
+    private fun obtenerUbicacion(lat: Double, lon: Double) {
+        val llamada: Call<Ubicacion> =
+            RetrofitUtil.getApi().getClima(lat, lon, true)
+
+        llamada.enqueue(object : Callback<Ubicacion> {
+            override fun onResponse(call: Call<Ubicacion>, response: Response<Ubicacion>) {
+                val ubicacion: Ubicacion? = response.body()
+                if (ubicacion != null) {
+
+                    val elevacion = ubicacion.elevation
+                    val temperatura = ubicacion.clima?.temperatura
+                    val velocidadViento = ubicacion.clima?.velocidadViento
+                    val direccionViento = ubicacion.clima?.direccionViento
+                    val codigoClima = ubicacion.clima?.codigoClima
+                    val esDia = ubicacion.clima?.esDia
+
+                    val intent = Intent(this@MainActivity, ViewWeatherActivity::class.java)
+                    intent.putExtra("lat", lat)
+                    intent.putExtra("lon", lon)
+                    intent.putExtra("elevacion", elevacion)
+                    intent.putExtra("temperatura", temperatura)
+                    intent.putExtra("velocidadViento", velocidadViento)
+                    intent.putExtra("direccionViento", direccionViento)
+                    intent.putExtra("codigoClima", codigoClima)
+                    intent.putExtra("esDia", esDia)
+                    startActivity(intent)
+
+                    Log.i("elevacion", elevacion.toString())
+                    Log.i("temperatura", temperatura.toString())
+                    Log.i("velocidadViento", velocidadViento.toString())
+                    Log.i("direccionViento", direccionViento.toString())
+                    Log.i("codigoClima", codigoClima.toString())
+                    Log.i("esDia", esDia.toString())
+                }
+            }
+
+            override fun onFailure(call: Call<Ubicacion>, t: Throwable) {
+                Log.e("Error", t.toString())
             }
         })
     }

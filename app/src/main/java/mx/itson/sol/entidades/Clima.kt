@@ -7,6 +7,16 @@ class Clima {
     @SerializedName("temperature")
     var temperatura: Float? = null
 
-    var windspeed: Float? =null
+    @SerializedName("windspeed")
+    var velocidadViento: Float? = null
+
+    @SerializedName("winddirection")
+    var direccionViento: Float? = null
+
+    @SerializedName("weathercode")
+    var codigoClima: Int? = null
+
+    @SerializedName("is_day")
+    var esDia: Int? = null
 
 }
