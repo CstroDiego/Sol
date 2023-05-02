@@ -3,11 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="350dp"
-    android:layout_height="700dp"
+    android:layout_height="600dp"
     android:background="@drawable/gradient_day"
     android:orientation="vertical"
     tools:context=".ViewWeatherActivity">
 
+    <!-- Weather icon -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -23,6 +24,7 @@
             android:contentDescription="@string/app_name" />
     </LinearLayout>
 
+    <!-- Coordinates -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -58,6 +60,48 @@
 
     </LinearLayout>
 
+    <!-- Weather code -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvTemperatura"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textAppearance="@style/TextAppearance.AppCompat.Display4"
+                android:textColor="@color/white"
+                android:textSize="75sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/texto_temperatura"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display4"
+                android:textColor="@color/white"
+                android:textSize="75sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/txtWeatherCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            android:textColor="@color/white"
+            android:textSize="30sp" />
+    </LinearLayout>
+
+    <!-- Weather description -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -65,45 +109,7 @@
         android:paddingStart="25dp"
         android:paddingEnd="0dp">
 
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tvTemperatura"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:textAppearance="@style/TextAppearance.AppCompat.Display4"
-                    android:textColor="@color/white"
-                    android:textSize="75sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/texto_temperatura"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Display4"
-                    android:textColor="@color/white"
-                    android:textSize="75sp" />
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/txtWeatherCode"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-                android:textColor="@color/white"
-                android:textSize="20sp" />
-        </LinearLayout>
-
+        <!-- Elevation -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -145,6 +151,7 @@
 
         </LinearLayout>
 
+        <!-- Wind speed -->
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -186,6 +193,7 @@
 
         </LinearLayout>
 
+        <!-- Wind direction -->
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -226,6 +234,7 @@
         </LinearLayout>
     </LinearLayout>
 
+    <!-- Close button -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"

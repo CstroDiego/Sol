@@ -25,9 +25,21 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+/**
+ * Activity principal
+ *
+ * @constructor Crea un activity principal para la aplicacion SOL
+ */
 class MainActivity : AppCompatActivity(), OnMapReadyCallback, LocationListener {
 
+    /**
+     * Mapa de google
+     */
     private var mapa: GoogleMap? = null
+
+    /**
+     * Codigo de resultado al pedir permisos
+     */
     val codigoResultado = 1
 
 
@@ -101,6 +113,12 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, LocationListener {
         })
     }
 
+    /**
+     * Obtiene los datos climaticos de una ubicacion
+     *
+     * @param lat Latitud de la ubicacion
+     * @param lon Longitud de la ubicacion
+     */
     private fun obtenerUbicacion(lat: Double, lon: Double) {
         val llamada: Call<Ubicacion> =
             RetrofitUtil.getApi().getClima(lat, lon, true)

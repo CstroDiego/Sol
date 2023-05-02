@@ -7,15 +7,52 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import java.util.Locale
 
+/**
+ * Activity para ver el clima
+ *
+ * @constructor Crea un activity para ver el clima
+ * @author Diego Castro Arce
+ */
 class ViewWeatherActivity : AppCompatActivity(), View.OnClickListener {
 
+    /**
+     * Latitud de la ubicacion
+     */
     var latitud: Float = 0.0f
+
+    /**
+     * Longitud de la ubicacion
+     */
     var longitud: Float = 0.0f
+
+    /**
+     * Elevacion de la ubicacion
+     */
     var elevacion: Float = 0.0f
+
+    /**
+     * Temperatura de la ubicacion
+     */
     var temperatura: Float = 0.0f
+
+    /**
+     * Velocidad viento de la ubicacion
+     */
     var velocidadViento: Float = 0.0f
+
+    /**
+     * Direccion viento de la ubicacion
+     */
     var direccionViento: Float = 0.0f
+
+    /**
+     * Codigo del clima de la ubicacion
+     */
     var codigoClima: Int = 0
+
+    /**
+     * Es dia de la ubicacion
+     */
     var esDia: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,6 +82,18 @@ class ViewWeatherActivity : AppCompatActivity(), View.OnClickListener {
         )
     }
 
+    /**
+     * Carga todos los datos de la ubicacion en la vista
+     *
+     * @param latitud Latitud de la ubicacion
+     * @param longitud Longitud de la ubicacion
+     * @param elevacion Elevacion de la ubicacion
+     * @param temperatura Temperatura de la ubicacion
+     * @param velocidadViento Velocidad del viento de la ubicacion
+     * @param direccionViento Direccion del viento de la ubicacion
+     * @param codigoClima Codigo del clima de la ubicacion
+     * @param esDia Es dia de la ubicacion
+     */
     @SuppressLint("DiscouragedApi")
     private fun cargar(
         latitud: Float,
