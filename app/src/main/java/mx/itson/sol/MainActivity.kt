@@ -33,12 +33,12 @@ import retrofit2.Response
 class MainActivity : AppCompatActivity(), OnMapReadyCallback, LocationListener {
 
     /**
-     * Mapa de google
+     * Mapa de google maps
      */
     private var mapa: GoogleMap? = null
 
     /**
-     * Codigo de resultado al pedir permisos
+     * Codigo de resultado al pedir permisos para iniciar el activity de ver el clima en forma de dialogo
      */
     val codigoResultado = 1
 
@@ -107,8 +107,12 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, LocationListener {
             }
 
             override fun onMarkerDragEnd(marker: Marker) {
+                Toast.makeText(
+                    this@MainActivity,
+                    "Cargando clima...",
+                    Toast.LENGTH_SHORT
+                ).show()
                 obtenerUbicacion(marker.position.latitude, marker.position.longitude)
-
             }
         })
     }

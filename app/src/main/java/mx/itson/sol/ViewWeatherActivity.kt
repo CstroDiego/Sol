@@ -4,7 +4,9 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import java.text.DecimalFormat
 import java.util.Locale
 
 /**
@@ -70,6 +72,7 @@ class ViewWeatherActivity : AppCompatActivity(), View.OnClickListener {
         esDia = intent.getIntExtra("esDia", 0)
 
         findViewById<View>(R.id.btnCerrar).setOnClickListener(this)
+
         cargar(
             latitud,
             longitud,
@@ -113,6 +116,7 @@ class ViewWeatherActivity : AppCompatActivity(), View.OnClickListener {
         val tvDireccionViento = findViewById<View>(R.id.tvDireccionViento) as TextView
         val txtWeatherCode = findViewById<View>(R.id.txtWeatherCode) as TextView
         val language = Locale.getDefault().language
+        val df = DecimalFormat("#.##")
 
         val prefix = if (esDia == 1) "day" else "night"
         findViewById<View>(R.id.main).setBackgroundResource(
@@ -248,18 +252,23 @@ class ViewWeatherActivity : AppCompatActivity(), View.OnClickListener {
 
         tvLongitud.text = "$longitud"
         tvLatitud.text = "$latitud"
-        tvElevacion.text = "$elevacion"
+        val elevacionFormat = df.format(elevacion).toFloat()
+        tvElevacion.text = "$elevacionFormat"
         tvDireccionViento.text = "$direccionViento"
         if (language == "en") {
             //convervitoms la temperatura a grados fahrenheit
-            val temperatura = (temperatura * 1.8f) + 32
+            // reducir a 2 decimales
+
+            val temperatura = df.format((temperatura * 1.8f) + 32).toFloat()
             tvTemperatura.text = "$temperatura"
 
-            val velocidadViento = velocidadViento / 1.609f
+            val velocidadViento = df.format(velocidadViento / 1.609f).toFloat()
             tvVelocidadViento.text = "$velocidadViento"
         } else {
-            tvTemperatura.text = "$temperatura"
-            tvVelocidadViento.text = "$velocidadViento"
+            val tempFormat = df.format(temperatura).toFloat()
+            val velocidadFormat = df.format(velocidadViento).toFloat()
+            tvTemperatura.text = "$tempFormat"
+            tvVelocidadViento.text = "$velocidadFormat"
         }
 
     }

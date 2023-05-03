@@ -14,7 +14,7 @@ import retrofit2.http.Query
 interface OpenMeteo {
 
     /**
-     * Obtiene el clima de una ubicacion
+     * Consulta para obtener el clima con el API de OpenMeteo
      *
      * @param lat Latitud de la ubicacion
      * @param lon Longitud de la ubicacion
