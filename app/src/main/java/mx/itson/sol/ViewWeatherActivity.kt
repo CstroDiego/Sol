@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import java.text.DecimalFormat
 import java.util.Locale
@@ -256,9 +255,6 @@ class ViewWeatherActivity : AppCompatActivity(), View.OnClickListener {
         tvElevacion.text = "$elevacionFormat"
         tvDireccionViento.text = "$direccionViento"
         if (language == "en") {
-            //convervitoms la temperatura a grados fahrenheit
-            // reducir a 2 decimales
-
             val temperatura = df.format((temperatura * 1.8f) + 32).toFloat()
             tvTemperatura.text = "$temperatura"
 
@@ -270,7 +266,6 @@ class ViewWeatherActivity : AppCompatActivity(), View.OnClickListener {
             tvTemperatura.text = "$tempFormat"
             tvVelocidadViento.text = "$velocidadFormat"
         }
-
     }
 
     override fun onClick(p0: View?) {
@@ -278,5 +273,4 @@ class ViewWeatherActivity : AppCompatActivity(), View.OnClickListener {
             R.id.btnCerrar -> finish()
         }
     }
-
 }

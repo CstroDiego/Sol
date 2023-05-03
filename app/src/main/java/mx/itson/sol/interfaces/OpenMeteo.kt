@@ -22,7 +22,9 @@ interface OpenMeteo {
      * @return Call<Ubicacion> Llamada para obtener el clima
      */
     @GET("forecast")
-    fun getClima(@Query("latitude") lat:Double,
-                 @Query("longitude") lon:Double,
-                 @Query("current_weather") current: Boolean): Call<Ubicacion>
+    fun getClima(
+        @Query("latitude") lat: Double,
+        @Query("longitude") lon: Double,
+        @Query("current_weather") current: Boolean
+    ): Call<Ubicacion>
 }

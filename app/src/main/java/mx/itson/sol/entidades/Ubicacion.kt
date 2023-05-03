@@ -13,7 +13,7 @@ class Ubicacion {
     /**
      * Latitud de la ubicacion
      */
-    var latitude : Float? = null
+    var latitude: Float? = null
 
     /**
      * Longitud de la ubicacion
@@ -23,12 +23,12 @@ class Ubicacion {
     /**
      * Elevacion de la ubicacion
      */
-    var elevation:Float? = null
+    var elevation: Float? = null
 
     /**
      * Objeto clima para obtener las variables del clima actual
      */
     @SerializedName("current_weather")
-    var clima:Clima? = null
+    var clima: Clima? = null
 
 }

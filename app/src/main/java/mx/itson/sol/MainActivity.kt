@@ -42,7 +42,6 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, LocationListener {
      */
     val codigoResultado = 1
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -60,7 +59,6 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, LocationListener {
                 this,
                 ACCESS_FINE_LOCATION
             ) == PackageManager.PERMISSION_GRANTED
-
             if (estaPermitido) {
                 mapa!!.isMyLocationEnabled = true
             } else {
@@ -76,12 +74,10 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, LocationListener {
             if (location != null) {
                 onLocationChanged(location)
             }
-
         } catch (ex: Exception) {
             Log.e("error al cargar el mapa", ex.toString())
         }
     }
-
 
     override fun onLocationChanged(location: Location) {
         val latitud = location.latitude
@@ -89,14 +85,9 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, LocationListener {
 
         val latLng = LatLng(latitud, longitud)
         mapa?.clear()
-
-        // Guardar referencia al marcador
         mapa?.addMarker(MarkerOptions().position(latLng).draggable(true).title("Mi ubicación"))
-
         mapa?.moveCamera(CameraUpdateFactory.newLatLng(latLng))
         mapa?.animateCamera(CameraUpdateFactory.zoomTo(15f))
-
-        // Agregar listener al marcador
         mapa?.setOnMarkerDragListener(object : OnMarkerDragListener {
             override fun onMarkerDragStart(marker: Marker) {
                 val a = 1 + 1
@@ -131,7 +122,6 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, LocationListener {
             override fun onResponse(call: Call<Ubicacion>, response: Response<Ubicacion>) {
                 val ubicacion: Ubicacion? = response.body()
                 if (ubicacion != null) {
-
                     val latitud = ubicacion.latitude
                     val longitud = ubicacion.longitude
                     val elevacion = ubicacion.elevation
@@ -159,9 +149,8 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, LocationListener {
                 Log.e("Error", t.toString())
             }
         })
-
-
     }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == codigoResultado && resultCode == RESULT_OK) {
