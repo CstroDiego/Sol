@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Sol</string>
+    <string name="texto_latitud">"Latitude: "</string>
+    <string name="caracter_separador">" | "</string>
+    <string name="texto_longitud">"Longitude: "</string>
+    <string name="texto_temperatura">°F</string>
+    <string name="texto_nivel_del_mar">" MASL"</string>
+    <string name="texto_elevacion">Elevation</string>
+    <string name="texto_velocidad">" mph"</string>
+    <string name="texto_velocidad_viento">Wind speed</string>
+    <string name="caracter_grados">"°"</string>
+    <string name="texto_direccion_viento">Wind direction</string>
+    <string name="texto_cerrar">Close</string>
+    <string name="texto_despejado">Clear sky</string>
+    <string name="texto_nublado">Partly cloudy</string>
+    <string name="texto_neblina">Fog</string>
+    <string name="texto_llovizna">Drizzle</string>
+    <string name="texto_llovizna_helada">Freezing Drizzle</string>
+    <string name="texto_lluvia">Rain</string>
+    <string name="texto_lluvia_helada">Freezing Rain</string>
+    <string name="texto_nieve">Snow fall</string>
+    <string name="texto_granizo">Snow grains</string>
+    <string name="texto_tormenta">Thunderstorm</string>
+    <string name="texto_tormenta_fuerte">Heavy Thunderstorm</string>
+</resources>

@@ -1,6 +1,7 @@
 package mx.itson.sol
 
 import android.Manifest.permission.ACCESS_FINE_LOCATION
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationListener
@@ -24,15 +25,26 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+/**
+ * Activity principal
+ *
+ * @constructor Crea un activity principal para la aplicacion SOL
+ */
 class MainActivity : AppCompatActivity(), OnMapReadyCallback, LocationListener {
 
+    /**
+     * Mapa de google maps
+     */
     private var mapa: GoogleMap? = null
+
+    /**
+     * Codigo de resultado al pedir permisos para iniciar el activity de ver el clima en forma de dialogo
+     */
+    val codigoResultado = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        obtenerUbicacion()
 
         val mapFragment = supportFragmentManager.findFragmentById(R.id.mapa) as SupportMapFragment
         mapFragment.getMapAsync(this)
@@ -47,7 +59,6 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, LocationListener {
                 this,
                 ACCESS_FINE_LOCATION
             ) == PackageManager.PERMISSION_GRANTED
-
             if (estaPermitido) {
                 mapa!!.isMyLocationEnabled = true
             } else {
@@ -63,25 +74,9 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, LocationListener {
             if (location != null) {
                 onLocationChanged(location)
             }
-
         } catch (ex: Exception) {
             Log.e("error al cargar el mapa", ex.toString())
         }
-    }
-
-    private fun obtenerUbicacion() {
-        val llamada: Call<Ubicacion> =
-            RetrofitUtil.getApi().getClima("27.9676629", "-110.9188319", true)
-
-        llamada.enqueue(object : Callback<Ubicacion> {
-            override fun onResponse(call: Call<Ubicacion>, response: Response<Ubicacion>) {
-                val ubicacion: Ubicacion? = response.body()
-            }
-
-            override fun onFailure(call: Call<Ubicacion>, t: Throwable) {
-                TODO("Not yet implemented")
-            }
-        })
     }
 
     override fun onLocationChanged(location: Location) {
@@ -90,31 +85,76 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, LocationListener {
 
         val latLng = LatLng(latitud, longitud)
         mapa?.clear()
-
-        // Guardar referencia al marcador
         mapa?.addMarker(MarkerOptions().position(latLng).draggable(true).title("Mi ubicación"))
-
         mapa?.moveCamera(CameraUpdateFactory.newLatLng(latLng))
         mapa?.animateCamera(CameraUpdateFactory.zoomTo(15f))
-
-        // Agregar listener al marcador
         mapa?.setOnMarkerDragListener(object : OnMarkerDragListener {
             override fun onMarkerDragStart(marker: Marker) {
-                TODO("Acción a realizar cuando inicia el arrastre")
+                val a = 1 + 1
             }
 
             override fun onMarkerDrag(marker: Marker) {
-                TODO("Acción a realizar mientras se está arrastrando")
+                val a = 1 + 1
             }
 
             override fun onMarkerDragEnd(marker: Marker) {
-                // Acción a realizar cuando se termina el arrastre
                 Toast.makeText(
                     this@MainActivity,
-                    "Latitud: ${marker.position.latitude} Longitud: ${marker.position.longitude}",
-                    Toast.LENGTH_LONG
+                    "Cargando clima...",
+                    Toast.LENGTH_SHORT
                 ).show()
+                obtenerUbicacion(marker.position.latitude, marker.position.longitude)
             }
         })
+    }
+
+    /**
+     * Obtiene los datos climaticos de una ubicacion
+     *
+     * @param lat Latitud de la ubicacion
+     * @param lon Longitud de la ubicacion
+     */
+    private fun obtenerUbicacion(lat: Double, lon: Double) {
+        val llamada: Call<Ubicacion> =
+            RetrofitUtil.getApi().getClima(lat, lon, true)
+
+        llamada.enqueue(object : Callback<Ubicacion> {
+            override fun onResponse(call: Call<Ubicacion>, response: Response<Ubicacion>) {
+                val ubicacion: Ubicacion? = response.body()
+                if (ubicacion != null) {
+                    val latitud = ubicacion.latitude
+                    val longitud = ubicacion.longitude
+                    val elevacion = ubicacion.elevation
+                    val temperatura = ubicacion.clima?.temperatura
+                    val velocidadViento = ubicacion.clima?.velocidadViento
+                    val direccionViento = ubicacion.clima?.direccionViento
+                    val codigoClima = ubicacion.clima?.codigoClima
+                    val esDia = ubicacion.clima?.esDia
+
+                    val intent = Intent(this@MainActivity, ViewWeatherActivity::class.java)
+                    intent.putExtra("latitud", latitud)
+                    intent.putExtra("longitud", longitud)
+                    intent.putExtra("elevacion", elevacion)
+                    intent.putExtra("temperatura", temperatura)
+                    intent.putExtra("velocidadViento", velocidadViento)
+                    intent.putExtra("direccionViento", direccionViento)
+                    intent.putExtra("codigoClima", codigoClima)
+                    intent.putExtra("esDia", esDia)
+
+                    startActivityForResult(intent, codigoResultado)
+                }
+            }
+
+            override fun onFailure(call: Call<Ubicacion>, t: Throwable) {
+                Log.e("Error", t.toString())
+            }
+        })
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == codigoResultado && resultCode == RESULT_OK) {
+            // realizar alguna acción en consecuencia
+        }
     }
 }
